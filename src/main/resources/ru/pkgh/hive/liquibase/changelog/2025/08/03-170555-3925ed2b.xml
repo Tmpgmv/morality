@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1" author="hive">
+        <createTable remarks="Отделение" tableName="HIVE_DEPARTMENT">
+            <column name="ID" type="UUID">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_HIVE_DEPARTMENT"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="2" author="hive">
+        <addColumn tableName="HIVE_STUDY_GROUP">
+            <column name="DEPARTMENT_ID" remarks="Отделение." type="UUID"/>
+        </addColumn>
+
+        <addNotNullConstraint columnName="DEPARTMENT_ID" tableName="HIVE_STUDY_GROUP"/>
+    </changeSet>
+    <changeSet id="3" author="hive">
+        <createIndex indexName="IDX_HIVE_STUDY_GROUP_DEPARTMENT" tableName="HIVE_STUDY_GROUP">
+            <column name="DEPARTMENT_ID"/>
+        </createIndex>
+
+        <addForeignKeyConstraint baseColumnNames="DEPARTMENT_ID" baseTableName="HIVE_STUDY_GROUP"
+                                 constraintName="FK_HIVE_STUDY_GROUP_ON_DEPARTMENT" onDelete="CASCADE"
+                                 referencedColumnNames="ID" referencedTableName="HIVE_DEPARTMENT"/>
+    </changeSet>
+    <changeSet id="4" author="hive">
+        <setTableRemarks remarks="Предупреждение студенту. Не попадет в характеристику." tableName="HIVE_WARNING"/>
+    </changeSet>
+    <changeSet id="5" author="hive">
+        <setColumnRemarks columnDataType="varchar(255)" columnName="REACTION"
+                          remarks="Реакция на проступок (по умолчанию).&#10;При исчерпанаии доверия (задается в Settings в поле&#10;numberOfWarningsBeforeReprimand)&#10;будет уже не реакция по умолчанию, а выговор."
+                          tableName="HIVE_TYPE_OF_MISDEMEANOR"/>
+    </changeSet>
+</databaseChangeLog>
