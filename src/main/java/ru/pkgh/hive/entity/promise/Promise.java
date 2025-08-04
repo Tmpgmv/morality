@@ -1,4 +1,4 @@
-package ru.pkgh.hive.entity;
+package ru.pkgh.hive.entity.promise;
 
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
@@ -8,6 +8,8 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
+import ru.pkgh.hive.entity.misdemeanor.Misdemeanor;
+import ru.pkgh.hive.entity.general.Student;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

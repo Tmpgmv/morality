@@ -1,4 +1,4 @@
-package ru.pkgh.hive.entity;
+package ru.pkgh.hive.entity.messages;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.Comment;
@@ -12,20 +12,20 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Comment("""
-        Коллекция фраз для отказа. Их не должно быть много: 5-6.
-        Что-то вроде: "Неубедительно", "Вы не выполняете обещания, вынуждены отказать".""")
+        Коллекция фраз для принятия обещания или объяснительной записки.
+        Фраз не должно быть много. 5-6 достаточно. 
+        Например, "Мы принимаем Ваше обещание, но выносим предупреждение.".""")
 @JmixEntity
-@Table(name = "HIVE_REJECTION_PHRASE")
-@Entity(name = "hive_RejectionPhrase")
-public class RejectionPhrase {
+@Table(name = "HIVE_ACCEPTANCE_PHRASE")
+@Entity(name = "hive_AcceptancePhrase")
+public class AcceptancePhrase {
     @JmixGeneratedValue
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
 
-    @NotNull
-    @Comment("Текст отказа.")
     @Column(name = "TEXT", nullable = false, length = 1000)
+    @NotNull
     private String text;
 
     public String getText() {

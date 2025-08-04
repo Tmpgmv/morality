@@ -1,4 +1,4 @@
-package ru.pkgh.hive.entity;
+package ru.pkgh.hive.entity.general;
 
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
@@ -8,6 +8,8 @@ import io.jmix.core.metamodel.annotation.Composition;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import ru.pkgh.hive.entity.student.StudyGroup;
+import ru.pkgh.hive.entity.User;
 
 import java.util.UUID;
 

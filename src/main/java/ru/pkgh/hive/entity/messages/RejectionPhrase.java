@@ -1,4 +1,4 @@
-package ru.pkgh.hive.entity;
+package ru.pkgh.hive.entity.messages;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.Comment;
@@ -12,22 +12,20 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Comment("""
-        Коллекция типовых обещаний. В этой коллекции желательно иметь
-        пословицы и поговорки. Например, "Мое слово тверже гороха".
-        Пользователи увидят такие тексты. И это позволит все-таки немножко разрядить
-        обстановку.""")
+        Коллекция фраз для отказа. Их не должно быть много: 5-6.
+        Что-то вроде: "Неубедительно", "Вы не выполняете обещания, вынуждены отказать".""")
 @JmixEntity
-@Table(name = "HIVE_OATH")
-@Entity(name = "hive_Oath")
-public class Oath {
+@Table(name = "HIVE_REJECTION_PHRASE")
+@Entity(name = "hive_RejectionPhrase")
+public class RejectionPhrase {
     @JmixGeneratedValue
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
 
-    @Comment("Типовой текст обещания студента.")
-    @Column(name = "TEXT", nullable = false, length = 1000)
     @NotNull
+    @Comment("Текст отказа.")
+    @Column(name = "TEXT", nullable = false, length = 1000)
     private String text;
 
     public String getText() {

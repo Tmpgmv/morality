@@ -1,4 +1,4 @@
-package ru.pkgh.hive.entity;
+package ru.pkgh.hive.entity.misdemeanor;
 
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.FileRef;
@@ -9,6 +9,8 @@ import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
+import ru.pkgh.hive.entity.User;
+import ru.pkgh.hive.entity.general.Student;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

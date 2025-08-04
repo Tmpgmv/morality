@@ -1,10 +1,13 @@
-package ru.pkgh.hive.entity;
+package ru.pkgh.hive.entity.warning;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.Comment;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import ru.pkgh.hive.entity.User;
+import ru.pkgh.hive.entity.misdemeanor.Misdemeanor;
+import ru.pkgh.hive.entity.misdemeanor.TypeOfMisdemeanor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

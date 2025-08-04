@@ -1,4 +1,4 @@
-package ru.pkgh.hive.entity;
+package ru.pkgh.hive.entity.general;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.Comment;
@@ -12,18 +12,20 @@ import jakarta.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Comment("""
-        Коллекция фраз для принятия обещания или объяснительной записки.
-        Фраз не должно быть много. 5-6 достаточно. 
-        Например, "Мы принимаем Ваше обещание, но выносим предупреждение.".""")
+        Коллекция типовых обещаний. В этой коллекции желательно иметь
+        пословицы и поговорки. Например, "Мое слово тверже гороха".
+        Пользователи увидят такие тексты. И это позволит все-таки немножко разрядить
+        обстановку.""")
 @JmixEntity
-@Table(name = "HIVE_ACCEPTANCE_PHRASE")
-@Entity(name = "hive_AcceptancePhrase")
-public class AcceptancePhrase {
+@Table(name = "HIVE_OATH")
+@Entity(name = "hive_Oath")
+public class Oath {
     @JmixGeneratedValue
     @Column(name = "ID", nullable = false)
     @Id
     private UUID id;
 
+    @Comment("Типовой текст обещания студента.")
     @Column(name = "TEXT", nullable = false, length = 1000)
     @NotNull
     private String text;

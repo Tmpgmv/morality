@@ -1,10 +1,11 @@
-package ru.pkgh.hive.entity;
+package ru.pkgh.hive.entity.statement_of_explanation;
 
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.metamodel.annotation.Comment;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import ru.pkgh.hive.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

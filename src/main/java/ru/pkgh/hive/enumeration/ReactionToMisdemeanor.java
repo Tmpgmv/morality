@@ -1,4 +1,4 @@
-package ru.pkgh.hive.entity;
+package ru.pkgh.hive.enumeration;
 
 import io.jmix.core.metamodel.datatype.EnumClass;
 
