@@ -10,12 +10,16 @@ import ru.pkgh.hive.entity.User;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Comment("Непринятие обещания. Т.е. студент понесет наказание за проступок.")
+@Comment("Не поверили обещанию. Т.е. студент понесет наказание за проступок.")
 @JmixEntity
 @Table(name = "HIVE_REJECTION_OF_PROMISE", indexes = {
         @Index(name = "IDX_HIVE_REJECTION_OF_PROMISE_PROMISE", columnList = "PROMISE_ID"),
         @Index(name = "IDX_HIVE_REJECTION_OF_PROMISE_EMPLOYEE", columnList = "EMPLOYEE_ID")
-})
+},
+        uniqueConstraints = {
+                @UniqueConstraint(name = "UNQ_HIVE_REJECTION_PROMISE", columnNames = {"PROMISE_ID"})
+        }
+)
 @Entity(name = "hive_RejectionOfPromise")
 public class RejectionOfPromise {
     @JmixGeneratedValue

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      xmlns:c="http://jmix.io/schema/flowui/jpql-condition"
+      title="msg://acceptanceOfPromiseListView.title"
+      focusComponent="acceptanceOfPromisesDataGrid">
+    <data>
+        <collection id="acceptanceOfPromisesDc"
+                    class="ru.pkgh.hive.entity.promise.AcceptanceOfPromise">
+            <fetchPlan extends="_base">
+                <property name="promise" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="acceptanceOfPromisesDl" readOnly="true">
+                <query>
+                    <![CDATA[select e from hive_AcceptanceOfPromise e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+        <urlQueryParameters>
+            <genericFilter component="genericFilter"/>
+            <pagination component="pagination"/>
+        </urlQueryParameters>
+    </facets>
+    <actions>
+        <action id="selectAction" type="lookup_select"/>
+        <action id="discardAction" type="lookup_discard"/>
+    </actions>
+    <layout>
+        <genericFilter id="genericFilter"
+                       dataLoader="acceptanceOfPromisesDl">
+            <properties include=".*"/>
+        </genericFilter>
+        <hbox id="buttonsPanel" classNames="buttons-panel">
+            <button id="createButton" action="acceptanceOfPromisesDataGrid.createAction"/>
+            <button id="editButton" action="acceptanceOfPromisesDataGrid.editAction"/>
+            <button id="removeButton" action="acceptanceOfPromisesDataGrid.removeAction"/>
+            <simplePagination id="pagination" dataLoader="acceptanceOfPromisesDl"/>
+        </hbox>
+        <dataGrid id="acceptanceOfPromisesDataGrid"
+                  width="100%"
+                  minHeight="20em"
+                  dataContainer="acceptanceOfPromisesDc"
+                  columnReorderingAllowed="true">
+            <actions>
+                <action id="createAction" type="list_create"/>
+                <action id="editAction" type="list_edit"/>
+                <action id="removeAction" type="list_remove"/>
+            </actions>
+            <columns resizable="true">
+                <column property="createdAt"/>
+                <column property="promise"/>
+                <column property="comment"/>
+            </columns>
+        </dataGrid>
+        <hbox id="lookupActions" visible="false">
+            <button id="selectButton" action="selectAction"/>
+            <button id="discardButton" action="discardAction"/>
+        </hbox>
+    </layout>
+</view>

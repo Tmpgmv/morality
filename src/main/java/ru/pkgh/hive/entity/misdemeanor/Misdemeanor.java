@@ -2,10 +2,14 @@ package ru.pkgh.hive.entity.misdemeanor;
 
 import io.jmix.core.DeletePolicy;
 import io.jmix.core.FileRef;
+import io.jmix.core.MetadataTools;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.metamodel.annotation.Comment;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.metamodel.datatype.DatatypeFormatter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
@@ -29,21 +33,21 @@ public class Misdemeanor {
     private UUID id;
 
     @Comment("""
-            Колледж отреагировал. Флаг взводится, только если последовала реакция колледжа. 
+            Колледж отреагировал. Флаг взводится, только если последовала реакция колледжа.
             Если выполнены действия, флаг не взводится.
             
             
-            Эта информация может быть извлечена из базы данных в таблицах 
+            Эта информация может быть извлечена из базы данных в таблицах
             Warning или Reprimand. Т.е. эта информация излешняя, но
             она несет удобство пользователю.""")
     @Column(name = "COLLEGE_REACTED")
     private Boolean collegeReacted;
 
     @Comment("""
-            Студент отреагировал. Флаг взводится, только если последовала реакция колледжа. 
+            Студент отреагировал. Флаг взводится, только если последовала реакция колледжа.
             Если выполнены действия, флаг не взводится.
             
-            Эта информация может быть извлечена из базы данных в таблицах 
+            Эта информация может быть извлечена из базы данных в таблицах
             Promise или StatementOfExplanation. Т.е. эта информация излешняя, но
             она несет удобство пользователю.""")
     @Column(name = "STUDENT_REACTED")
@@ -174,4 +178,11 @@ public class Misdemeanor {
         this.id = id;
     }
 
+    @InstanceName
+    @DependsOnProperties({"type", "createdAt"})
+    public String getInstanceName(MetadataTools metadataTools, DatatypeFormatter datatypeFormatter) {
+        return String.format("%s (%s)",
+                metadataTools.format(type),
+                datatypeFormatter.formatLocalDateTime(createdAt));
+    }
 }

@@ -16,7 +16,11 @@ import java.util.UUID;
 @Table(name = "HIVE_ACCEPTANCE_OF_PROMISE", indexes = {
         @Index(name = "IDX_HIVE_ACCEPTANCE_OF_PROMISE_EMPLOYEE", columnList = "EMPLOYEE_ID"),
         @Index(name = "IDX_HIVE_ACCEPTANCE_OF_PROMISE_PROMISE", columnList = "PROMISE_ID")
-})
+},
+        uniqueConstraints = {
+                @UniqueConstraint(name = "UNQ_HIVE_ACCEPTANCE_PROMISE", columnNames = {"PROMISE_ID"})
+        }
+)
 @Entity(name = "hive_AcceptanceOfPromise")
 public class AcceptanceOfPromise {
     @JmixGeneratedValue

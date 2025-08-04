@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://promiseDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="promiseDc"
+                  class="ru.pkgh.hive.entity.promise.Promise">
+            <fetchPlan extends="_instance_name">
+                <property name="text"/>
+                <property name="misdemeanor" fetchPlan="_base"/>
+                <property name="student" fetchPlan="_base">
+                    <property name="user">
+                        <property name="username"/>
+                        <property name="firstName"/>
+                        <property name="lastName"/>
+                    </property>
+                </property>
+                <property name="collegeReacted"/>
+            </fetchPlan>
+            <loader id="promiseDl"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="promiseDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <textArea id="textField" height="9.5em" property="text"/>
+            <entityPicker id="misdemeanorField" property="misdemeanor">
+                <actions>
+                    <action id="entityLookupAction" type="entity_lookup"/>
+                    <action id="entityClearAction" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <dateTimePicker id="createdAtField" property="createdAt" readOnly="true"/>
+            <entityPicker id="studentField" property="student">
+                <actions>
+                    <action id="entityLookupAction" type="entity_lookup"/>
+                    <action id="entityClearAction" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <checkbox id="collegeReactedField" property="collegeReacted"/>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

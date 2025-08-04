@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<view xmlns="http://jmix.io/schema/flowui/view"
+      title="msg://rejectionOfPromiseDetailView.title"
+      focusComponent="form">
+    <data>
+        <instance id="rejectionOfPromiseDc"
+                  class="ru.pkgh.hive.entity.promise.RejectionOfPromise">
+            <fetchPlan extends="_instance_name">
+                <property name="createdAt"/>
+                <property name="comment"/>
+                <property name="message"/>
+                <property name="promise" fetchPlan="_base">
+                    <property name="misdemeanor">
+                        <property name="type" fetchPlan="_instance_name"/>
+                    </property>
+                </property>
+                <property name="employee" fetchPlan="_base"/>
+            </fetchPlan>
+            <loader id="rejectionOfPromiseDl"/>
+        </instance>
+    </data>
+    <facets>
+        <dataLoadCoordinator auto="true"/>
+    </facets>
+    <actions>
+        <action id="saveAction" type="detail_saveClose"/>
+        <action id="closeAction" type="detail_close"/>
+    </actions>
+    <layout>
+        <formLayout id="form" dataContainer="rejectionOfPromiseDc">
+            <responsiveSteps>
+                <responsiveStep minWidth="0" columns="1"/>
+                <responsiveStep minWidth="40em" columns="2"/>
+            </responsiveSteps>
+            <dateTimePicker id="createdAtField" property="createdAt" readOnly="true"/>
+            <textArea id="commentField" height="9.5em" property="comment"/>
+            <textField id="messageField" property="message"/>
+            <entityPicker id="promiseField" property="promise">
+                <actions>
+                    <action id="entityLookupAction" type="entity_lookup"/>
+                    <action id="entityClearAction" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+            <entityPicker id="employeeField" property="employee">
+                <actions>
+                    <action id="entityLookupAction" type="entity_lookup"/>
+                    <action id="entityClearAction" type="entity_clear"/>
+                </actions>
+            </entityPicker>
+        </formLayout>
+        <hbox id="detailActions">
+            <button id="saveAndCloseButton" action="saveAction"/>
+            <button id="closeButton" action="closeAction"/>
+        </hbox>
+    </layout>
+</view>

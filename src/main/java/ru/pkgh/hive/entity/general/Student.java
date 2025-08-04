@@ -1,23 +1,25 @@
 package ru.pkgh.hive.entity.general;
 
 import io.jmix.core.DeletePolicy;
+import io.jmix.core.MetadataTools;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.metamodel.annotation.Comment;
-import io.jmix.core.metamodel.annotation.Composition;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import ru.pkgh.hive.entity.student.StudyGroup;
 import ru.pkgh.hive.entity.User;
+import ru.pkgh.hive.entity.student.StudyGroup;
 
 import java.util.UUID;
 
 @Comment("Студент.")
 @JmixEntity
 @Table(name = "HIVE_STUDENT", indexes = {
-        @Index(name = "IDX_HIVE_STUDENT_USER", columnList = "USER_ID"),
-        @Index(name = "IDX_HIVE_STUDENT_STUDY_GROUP", columnList = "STUDY_GROUP_ID")
+        @Index(name = "IDX_HIVE_STUDENT_STUDY_GROUP", columnList = "STUDY_GROUP_ID"),
+        @Index(name = "IDX_HIVE_STUDENT_USER", columnList = "USER_ID")
 })
 @Entity(name = "hive_Student")
 public class Student {
@@ -26,11 +28,10 @@ public class Student {
     @Id
     private UUID id;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @Comment("Пользователь.")
     @JoinColumn(name = "USER_ID", nullable = false)
-    @Composition
     @NotNull
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
     private User user;
 
     @Comment("Номер студенческого билета.")
@@ -75,4 +76,10 @@ public class Student {
         this.id = id;
     }
 
+    @InstanceName
+    @DependsOnProperties({"user"})
+    public String getInstanceName(MetadataTools metadataTools) {
+
+        return String.format("%s %s (%s)", user.getLastName(), user.getFirstName(), getStudyGroup().getName());
+    }
 }

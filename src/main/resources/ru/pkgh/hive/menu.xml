@@ -3,6 +3,17 @@
 
     <menu id="application" title="msg://ru.pkgh.hive/menu.application.title" opened="true">
         <item view="hive_User.list" title="msg://ru.pkgh.hive.view.user/UserListView.title"/>
+        <item view="hive_Department.list" title="msg://ru.pkgh.hive.view.department/departmentListView.title"/>
+        <item view="hive_TypeOfMisdemeanor.list"
+              title="msg://ru.pkgh.hive.view.typeofmisdemeanor/typeOfMisdemeanorListView.title"/>
+        <item view="hive_StudyGroup.list" title="msg://ru.pkgh.hive.view.studygroup/studyGroupListView.title"/>
+        <item view="hive_Student.list" title="msg://ru.pkgh.hive.view.student/studentListView.title"/>
+        <item view="hive_Misdemeanor.list" title="msg://ru.pkgh.hive.view.misdemeanor/misdemeanorListView.title"/>
+        <item view="hive_Promise.list" title="msg://ru.pkgh.hive.view.promise/promiseListView.title"/>
+        <item view="hive_AcceptanceOfPromise.list"
+              title="msg://ru.pkgh.hive.view.acceptanceofpromise/acceptanceOfPromiseListView.title"/>
+        <item view="hive_RejectionOfPromise.list"
+              title="msg://ru.pkgh.hive.view.rejectionofpromise/rejectionOfPromiseListView.title"/>
     </menu>
 
 </menu-config>

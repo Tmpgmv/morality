@@ -1,15 +1,19 @@
 package ru.pkgh.hive.entity.promise;
 
 import io.jmix.core.DeletePolicy;
+import io.jmix.core.MetadataTools;
 import io.jmix.core.entity.annotation.JmixGeneratedValue;
 import io.jmix.core.entity.annotation.OnDeleteInverse;
 import io.jmix.core.metamodel.annotation.Comment;
+import io.jmix.core.metamodel.annotation.DependsOnProperties;
+import io.jmix.core.metamodel.annotation.InstanceName;
 import io.jmix.core.metamodel.annotation.JmixEntity;
+import io.jmix.core.metamodel.datatype.DatatypeFormatter;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.CreatedDate;
-import ru.pkgh.hive.entity.misdemeanor.Misdemeanor;
 import ru.pkgh.hive.entity.general.Student;
+import ru.pkgh.hive.entity.misdemeanor.Misdemeanor;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -25,6 +29,8 @@ import java.util.UUID;
 @Table(name = "HIVE_PROMISE", indexes = {
         @Index(name = "IDX_HIVE_PROMISE_STUDENT", columnList = "STUDENT_ID"),
         @Index(name = "IDX_HIVE_PROMISE_MISDEMEANOR", columnList = "MISDEMEANOR_ID")
+}, uniqueConstraints = {
+        @UniqueConstraint(name = "UNQ_HIVE_PROMISE_MISDEMEANOR", columnNames = {"MISDEMEANOR_ID"})
 })
 @Entity(name = "hive_Promise")
 public class Promise {
@@ -40,8 +46,8 @@ public class Promise {
     private LocalDateTime createdAt;
 
     @Comment("""
-            Текст обещания. Сам текст неважен: он не пойдет в характеристику и т.п. 
-            Наличие текста - важно: мы все-таки хотим выслушать студента. 
+            Текст обещания. Сам текст неважен: он не пойдет в характеристику и т.п.
+            Наличие текста - важно: мы все-таки хотим выслушать студента.
             И важен сам факт обещания.""")
     @Column(name = "TEXT", nullable = false)
     @Lob
@@ -54,11 +60,27 @@ public class Promise {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     private Misdemeanor misdemeanor;
 
+    @Comment("""
+            Колледж отреагировал. Этот флаг - для удобства (фильтрация, сортировка).
+            Информацию можно было бы извлечь из других таблиц (AcceptanceOfPromise,
+            RejectionOfPromise).
+            Т.е. выполнено сознательное дублирование информации.""")
+    @Column(name = "COLLEGE_REACTED")
+    private Boolean collegeReacted;
+
     @Comment("Ссылка на студента.")
     @OnDeleteInverse(DeletePolicy.CASCADE)
     @JoinColumn(name = "STUDENT_ID", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Student student;
+
+    public Boolean getCollegeReacted() {
+        return collegeReacted;
+    }
+
+    public void setCollegeReacted(Boolean collegeReacted) {
+        this.collegeReacted = collegeReacted;
+    }
 
     public Misdemeanor getMisdemeanor() {
         return misdemeanor;
@@ -100,4 +122,11 @@ public class Promise {
         this.id = id;
     }
 
+    @InstanceName
+    @DependsOnProperties({"createdAt", "misdemeanor"})
+    public String getInstanceName(MetadataTools metadataTools, DatatypeFormatter datatypeFormatter) {
+        return String.format("%s (%s)",
+                metadataTools.format(misdemeanor),
+                datatypeFormatter.formatLocalDateTime(createdAt));
+    }
 }
